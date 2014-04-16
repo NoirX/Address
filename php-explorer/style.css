@@ -1,0 +1,95 @@
+body {
+    background-color:#f1f1f1;
+    font-family: georgia,sans-serif;
+    color:#333;
+    margin:0;
+    padding:0;
+}
+
+#header {
+    width:100%;
+    height: 90px;
+    margin: 0 auto;
+    margin-bottom:25px;
+    border-bottom:1px solid #ccc;
+    border-top:1px solid #ccc;
+    text-align:left;
+}
+
+#content {
+    width: 1000px;
+    float:left;
+    margin: 0px 64px;
+    border-radius: 20px;
+    border: black;
+    border-width: 2px;
+    border-style: solid;
+}
+
+.footer {
+    clear:both;
+    width:100%;
+    height:135px;
+    border-top:1px solid #ccc;
+    text-align:center;
+}
+
+.footer p {
+    padding:10px;
+}
+#site_head_logo {
+    float:left;
+    height:135px;
+    width:90px;
+    margin: 10px;
+}
+.address_head {
+    width:100%;
+    margin: 10px auto;
+}
+.address_head_left {
+    width:480px;
+    float:left;
+    margin: 5px;
+    vertical-align: middle;
+    font-weight: bold;
+    background-color: #FFF;
+    height: 64px;
+    border-style: double;
+    border-radius: 10px;
+}
+.address_head_right {
+    width:460px;
+    float:right;
+    margin: 5px;
+    vertical-align: middle;
+    font-weight: bold;
+    background-color: #FFF;
+    text-align: right;
+    height: 64px;
+    border-style: double;
+    border-radius: 10px;
+}
+.address_content {
+    width: 800px;
+    float: left;
+    margin: 20px 100px 50px;
+}
+.address_detail {
+    width:100%;
+}
+table#addr {
+    background-color: #FFF;
+    width:800px;
+    border: black;
+    border-style: solid;
+    border-radius:5px;
+}
+table#addr th {
+    border-style:solid;
+    font-weight:bold;
+    border-radius:5px;
+}
+.menu_desc {
+	text-align:center;
+}
