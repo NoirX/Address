@@ -1,9 +1,9 @@
 <?php
 
-$GLOBALS["wallet_ip"] = "127.0.0.1"; //wallet IP
-$GLOBALS["wallet_port"] = "10578"; //Wallet Port
-$GLOBALS["wallet_user"] = "NoirSharesrpc"; //Wallet Username
-$GLOBALS["wallet_pass"] = "7XoPzQx4pzxjtsw5EU5EwEGC4vAMDsBgfYu8NCxDXGHV";
+$GLOBALS["wallet_ip"] = "ip"; //wallet IP
+$GLOBALS["wallet_port"] = "port"; //Wallet Port
+$GLOBALS["wallet_user"] = "un"; //Wallet Username
+$GLOBALS["wallet_pass"] = "pw"; //wallet PW
 
 function output($x) {
     $f = sprintf('%0.08f', $x);
