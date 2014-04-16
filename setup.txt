@@ -1,0 +1,6 @@
+Setup
+Create database
+Import schema.sql into database,
+update $mysqli with database information
+update wallet info in info.php files.
+run batch.sh to populate database and keep updated.
