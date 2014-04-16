@@ -25,7 +25,7 @@ CREATE TABLE `txin` (
   `tx_source_hash` varchar(255) NOT NULL,
   `txin_pubkey` text,
   `txin_address` varchar(255) DEFAULT NULL,
-  `tx_value` decimal(10,0) DEFAULT NULL,
+  `tx_value` float DEFAULT NULL,
   PRIMARY KEY (`tx_in`),
   UNIQUE KEY `tx_in` (`tx_in`)
 ) ENGINE=InnoDB AUTO_INCREMENT=106517 DEFAULT CHARSET=latin1;
