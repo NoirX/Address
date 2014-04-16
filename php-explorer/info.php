@@ -156,4 +156,32 @@ function wallet_fetch ($request_array) {
 	//	hash value for the specified block in the chain
 		return ($info);
 	}
+	function getPrice()
+	{
+	$opts = array('http' =>
+                                array(
+                                        'method'  => 'GET',
+                                        'timeout' => 10
+                                )
+                        );
+                        $context = stream_context_create($opts);
+                        $feed = file_get_contents('https://poloniex.com/public?command=returnTicker', false, $context);
+                        $json = json_decode($feed, true);
+						$jdata = $json['BTC_NRS']['last'];
+                        return $jdata;
+	}
+	function btc()
+	{
+	$opts = array('http' =>
+                                array(
+                                        'method'  => 'GET',
+                                        'timeout' => 10
+                                )
+                        );
+                        $context = stream_context_create($opts);
+                        $feed = file_get_contents('https://btc-e.com/api/2/btc_usd/ticker', false, $context);
+                        $json = json_decode($feed, true);
+						$jdata = $json['ticker']['last'];
+                        return $jdata;
+	}
 ?>

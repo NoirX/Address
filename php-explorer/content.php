@@ -3,6 +3,9 @@ $GLOBALS["mysqli"] = new mysqli('ip/url', 'mysqlUN', 'mysqlPW', 'DB');
 
 function site_header ($title)
 {
+    $nrs=getPrice();
+	$btc=btc();
+	$usd=$nrs*$btc;
     echo "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">\n\n";
     echo "<head>\n\n";
     echo "	<title>".$title."</title>\n\n";
@@ -18,6 +21,7 @@ function site_header ($title)
     echo "			<h2><a href=\"".$_SERVER["PHP_SELF"]."\" title=\"Home Page\">\n";
     echo "				NoirShares Address Explorer\n";
     echo "			</a></h2>\n";
+	echo "<h5 style=\"text-align:right\">Poloniex Price ".$nrs."BTC|BTC-e Price $".$btc."/BTC| $".$usd."/NRS</h5>\n";
     echo "\n";
     echo "		</div>\n";
     echo "      <div id=\"content\">\n";
@@ -59,8 +63,12 @@ function start()
 
 function address_detail($addr)
 {
+$nrs=getPrice();
+	$btc=btc();
+	$usd=$nrs*$btc;
     $amounts=tally($addr);
     $amount=$amounts[count($amounts)-1];
+	$u1=$usd*(int)substr($amount[0][0],8);
     $tx=count($amounts)-1;
     echo "	<div class=\"address_head\">\n";
     echo "\n";
@@ -72,11 +80,11 @@ function address_detail($addr)
     echo "\n";
 
     echo "		<div class=\"address_head_right\">\n";
-    echo $amount[0][0]."<br>".$amount[1][0]."<br>".$amount[2][0]."\n";
+    echo $amount[0][0]."NRS $".round($u1,2)."<br>".$amount[1][0]."<br>".$amount[2][0]."\n";
     echo "		</div>\n";
     echo "\n";
     echo "</div>\n";
-
+	
     echo "      <div class=\"address_content\"> \n";
     echo "      <div class=\"address_detail\"> \n";
     echo "<table id=\"addr\">";
