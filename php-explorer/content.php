@@ -46,13 +46,13 @@ function site_footer ()
 function start()
 {
     site_header("PHP Address Explorer");
-	echo "	<div class=\"menu_desc\">\n";
+    echo "	<div class=\"menu_desc\">\n";
     echo "			<span>Enter Address</span><br>\n";
     echo "			<form action=\"".$_SERVER["PHP_SELF"]."\" method=\"post\">\n";
     echo "			<input type=\"text\" name=\"address\" size=\"40\">\n";
     echo "			<input type=\"submit\" name=\"submit\" value=\"Jump To Address\">\n";
     echo "			</form>\n";
-	echo " </div>";
+    echo " </div>";
     echo "\n";
 
 }
@@ -129,26 +129,22 @@ function tally($addr)
         $epoch= $d1['time'];
         $date = gmdate('r', $epoch);
         $outs= json_encode(array("Transaction" => $hash,
-                     "Date:" => $date,
-                     "Amount:" => $txout_value));
+            "Date:" => $date,
+            "Amount:" => $txout_value));
 
 
         $txin=$GLOBALS["mysqli"]->query("select tx_id from txin where tx_source_hash = '$txin_hash' and txin_address='$addr'");
         $tot=$tot+$txout_value;
         if(null!==$txin->fetch_row()){
             $num=$txin->fetch_row();
-//        echo $outs." ".$num." spent";
             $final[] =array($outs." ".json_encode(array(" spent")));
             $out=$out+$txout_value;
         }else{
-//        echo $outs." "."unspent";
             $sum= $sum+$txout_value;
             $final[] =array($outs." ".json_encode(array("unspent")));
         }
-        //echo"\n";
     }
     $tally =array(array("Unspent ".$sum),array("Spent ".$out),array("Total ".$tot));
-//echo $tally;
     $final[] =$tally;
     return $final;
 }
@@ -163,35 +159,30 @@ function outgoing($addr){
 
     $result =$GLOBALS["mysqli"]->query("SELECT tx_id,tx_source_hash,tx_value from txin where txin_address = '$addr'");
     $test=mysqli_fetch_all($result, MYSQLI_ASSOC);
-$size=count($test);
-$a=0;
-while($a!=$size){
+    $size=count($test);
+    $a=0;
+    while($a!=$size){
 
         $tx_id=$test[$a]['tx_id'];
         $txin_hash2=$GLOBALS["mysqli"]->query("Select tx_hash as tx_hash from block_tx where tx_id='$tx_id'")->fetch_object()->tx_hash;
         $val=0-$test[$a]['tx_value'];
         $new=array("tx_id"=> $tx_id,
-               "txout_value"=> (int)$val,
-               "txin_hash"=> $txin_hash2);
-    //print_r($new);
+            "txout_value"=> $val,
+            "txin_hash"=> $txin_hash2);
         $tests[]=$new;
-    $a=$a+1;
+        $a=$a+1;
     }
     return $tests;
 
 
-}function mul_sort($a,$b)
+}
+function mul_sort($a,$b)
 {
     if($a['tx_id'] > $b['tx_id'])
-
-        return 1;//here,if you return -1,return 1 below,the result will be descending
-
+        return 1;
     if($a['tx_id'] < $b['tx_id'])
-
         return -1;
-
     if($a['tx_id'] == $b['tx_id'])
-
         return 0;
 }
 function table($addr){
@@ -200,4 +191,53 @@ function table($addr){
     $new=array_merge($in,$out);
     uasort($new,'mul_sort');
     return $new;
+}
+
+function bagholder() {
+    $addrs=$GLOBALS["mysqli"]->query("select distinct(address) from txout");
+    $addr=mysqli_fetch_all($addrs,MYSQLI_ASSOC);
+    foreach($addr as $add){
+        $the[]=t2($add['address']);
+    }
+    uasort($the,'mul_sort2');
+    echo "      <div class=\"address_content\"> \n";
+    echo "      <div class=\"address_detail\"> \n";
+    echo "<table id=\"addr2\">";
+    echo "<tr><th>Address</th><th>NRS</th></td>";
+
+    foreach($the as $bag){
+        echo "<tr><td><a href=\"http://nrs.argakiig.us/expl/addressexplorer.php?address=".$bag[0]."\">".$bag[0]."</a></td><td>".$bag[1]."NRS</td></tr>";
+    }
+    echo "</table>";
+    echo "</div></div>";
+}
+
+function t2($addr) {
+    $sum=0;
+    $tot=0;
+    $out=0;
+    $test=address($addr);
+    foreach(array_keys($test) as $thi){
+        foreach(array_keys($test[$thi]) as $tha){
+            $$tha =$test[$thi][$tha];
+        }
+		$txin=$GLOBALS["mysqli"]->query("select tx_id from txin where tx_source_hash = '$txin_hash' and txin_address='$addr'");
+        if(null!==$txin->fetch_row()){
+            $out=$out+$txout_value;
+        }else{
+            $sum= $sum+$txout_value;
+        }
+    }
+    $tally =array($addr,$sum);
+    $final[]=$tally;
+    return $tally;
+}
+function mul_sort2($a,$b)
+{
+    if($a[1] > $b[1])
+        return 1;
+    if($a[1] < $b[1])
+        return -1;
+    if($a[1] == $b[1])
+        return 0;
 }

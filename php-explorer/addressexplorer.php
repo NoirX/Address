@@ -9,7 +9,14 @@ if (isset ($_REQUEST["address"]))
     site_header ("Address Details");
 
     address_detail($_REQUEST["address"]);
-}else{
+}
+elseif (isset ($_REQUEST["BagHolder"]))
+{
+	site_header ("BagHolders");
+	bagholder();
+}
+else
+{
     start();
 }
 site_footer();
