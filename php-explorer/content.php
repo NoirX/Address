@@ -196,8 +196,12 @@ function mul_sort($a,$b)
 function table($addr){
     $in=incoming($addr);
     $out=outgoing($addr);
+	if(isset($out)){
     $new=array_merge($in,$out);
     uasort($new,'mul_sort');
+	}else{
+	$new=$in;
+	}
     return $new;
 }
 
